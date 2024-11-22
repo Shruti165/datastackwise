@@ -1,0 +1,50 @@
+body {
+    background-color: #F2F2F2; /* Light Gray */
+    color: #4D4D4F; /* Dark Gray */
+}
+
+.navbar {
+    background-color: #003399; /* Primary Blue */
+}
+
+.navbar-brand, .nav-link {
+    color: #FFFFFF; /* White */
+}
+
+.btn-primary {
+    background-color: #0077CC; /* Secondary Blue */
+    border-color: #0077CC;
+}
+
+.btn-primary:hover {
+    background-color: #00A9E0; /* Accent Blue */
+    border-color: #00A9E0;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #003399; /* Primary Blue */
+    color: #FFFFFF; /* White */
+}
+
+.card-body {
+    background-color: #FFFFFF; /* White */
+}
+
+.table {
+    background-color: #FFFFFF; /* White */
+}
+
+.table th {
+    background-color: #003399; /* Primary Blue */
+    color: #FFFFFF; /* White */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F2F2F2; /* Light Gray */
+}

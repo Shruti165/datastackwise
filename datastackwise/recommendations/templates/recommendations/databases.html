@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Table</title>
+    <style>
+        /* Styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #003a63; /* Barclays blue */
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #003a63;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+
+        <ul>
+            <li><a href="{% url 'database_recommendation_form' %}">Input Form</a></li>
+<!--            <li><a href="{% url 'database_table' %}">Database Table</a></li>-->
+            <li><a href="{% url 'recommendations_results' %}">Recommendations Results</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Database Table</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Application Type</th>
+            <th>Scale</th>
+            <th>Read-Write Operations</th>
+            <th>Cost</th>
+            <th>Compliance Needs</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for database in databases %}
+        <tr>
+            <td>{{ database.name }}</td>
+            <td>{{ database.application_type }}</td>
+            <td>{{ database.scale }}</td>
+            <td>{{ database.read_write_operations }}</td>
+            <td>{{ database.cost }}</td>
+            <td>{{ database.compliance_needs }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

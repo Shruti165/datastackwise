@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Recommendation Results</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* Navbar (Top Menu Bar) */
+        .navbar {
+            background-color: #003B73;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .navbar .menu-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .menu-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .menu-links a:hover {
+            background-color: #005B8A;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #003B73;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            height: 100%;
+            top: 60px; /* Adjusted to give space for the navbar */
+            transition: width 0.3s;
+        }
+
+        .sidebar:hover {
+            width: 300px;
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: background-color 0.3s, padding-left 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #005B8A;
+            padding-left: 20px;
+        }
+
+        .sidebar a:active {
+            background-color: #00486A;
+        }
+
+        /* Content Area */
+        .container {
+            margin-left: 270px;
+            padding: 30px;
+            width: 70%;
+            overflow-y: auto;
+            margin-top: 100px; /* Added to ensure content starts below the navbar */
+        }
+
+        h2 {
+            color: #003B73;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Database Card */
+        .database-card {
+            padding: 25px;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .database-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .database-card h3 {
+            color: #003B73;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .database-card p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #003B73;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+
+        .form-group button {
+            background-color: #003B73;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #005B8A;
+        }
+
+        .form-group button:active {
+            background-color: #00486A;
+        }
+
+        .back-button {
+            text-align: center;
+        }
+
+        .back-button button {
+            background-color: #28a745;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button button:hover {
+            background-color: #218838;
+        }
+
+        /* Animation for Page Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7fc;
+        }
+
+        .loading img {
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Navigation Menu (Navbar) -->
+<div class="navbar">
+    <div class="logo">DataStackWise</div>
+    <div class="menu-links">
+        <a href="{% url 'database_recommendation_form' %}">Input Form</a>
+        <a href="{% url 'database_table' %}">Database Table</a>
+        <a href="{% url 'recommendation_results' %}">Recommendations</a>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h3>Navigation</h3>
+    <a href="#database_1">Database 1</a>
+    <a href="#database_2">Database 2</a>
+    <a href="#database_3">Database 3</a>
+    <a href="#database_4">Database 4</a>
+    <!-- Add more links as necessary -->
+</div>
+
+<!-- Content -->
+<div class="container">
+    <h2>Recommended Databases</h2>
+
+    <!-- Displaying Recommended Databases -->
+    {% for database in recommendations %}
+    <div class="database-card" id="database_{{ database.id }}">
+        <h3>{{ database.name }}</h3>
+        <p><strong>Description:</strong> {{ database.description }}</p>
+        <p><strong>Cost Analysis:</strong> {{ database.cost_analysis }}</p>
+        <p><strong>Advantages:</strong> {{ database.advantages }}</p>
+        <p><strong>Disadvantages:</strong> {{ database.disadvantages }}</p>
+
+        <!-- Additional Fields for User Input -->
+        <div class="form-group">
+            <label for="team_recommended_to">Team Recommended To:</label>
+            <input type="text" id="team_recommended_to" value="Business Intelligence Team" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="team_lead">Team Lead for Project:</label>
+            <input type="text" id="team_lead" value="John Doe" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="project_vertical">Vertical the Project Belongs To:</label>
+            <select id="project_vertical" disabled>
+                <option value="Data Engineering" selected>Data Engineering</option>
+                <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Analytics">Analytics</option>
+            </select>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Back Button -->
+    <div class="back-button">
+        <button onclick="window.location.href='{% url 'database_recommendation_form' %}'">Go Back</button>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database Recommendations</title>
+</head>
+<body>
+<h1>Recommended Databases</h1>
+<ul>
+    {% for database in databases %}
+    <li>
+        <h2>{{ database.name }}</h2>
+        <p><strong>Description:</strong> {{ database.description }}</p>
+        <p><strong>Application Type:</strong> {{ database.application_type }}</p>
+        <p><strong>Scale:</strong> {{ database.scale }}</p>
+        <p><strong>Read/Write Operations:</strong> {{ database.read_write_operations }}</p>
+        <p><strong>Cost:</strong> {{ database.cost }}</p>
+        <p><strong>Companies Using:</strong> {{ database.companies_using }}</p>
+        <p><strong>Benefits:</strong> {{ database.benefits }}</p>
+        <p><strong>Best Use Cases:</strong> {{ database.best_use_cases }}</p>
+    </li>
+    {% empty %}
+    <p>No recommendations match your criteria.</p>
+    {% endfor %}
+</ul>
+<a href="/">Back to Form</a>
+</body>
+</html>

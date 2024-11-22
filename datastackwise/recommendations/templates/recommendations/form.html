@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataStackWise - Database Recommendation Form</title>
+    <style>
+        /* Barclay's Color Scheme */
+        :root {
+            --primary-color: #0033A0; /* Deep Blue */
+            --secondary-color: #0072CE; /* Lighter Blue */
+            --accent-color: #00AEEF; /* Cyan Accent */
+            --background-color: #F4F6F9; /* Light Gray */
+            --text-color: #333333; /* Dark Gray for readability */
+            --button-color: #0072CE;
+            --button-hover-color: #0056A0;
+            --input-border-color: #D9D9D9;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            border-top: 2px solid var(--primary-color);
+            padding-top: 20px;
+        }
+
+        .form-section h2 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 5px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: var(--button-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        /* Navigation Menu */
+        .navbar {
+            background-color: #003B73; /* Barclays Dark Blue */
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 0 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #005B8A; /* Lighter Blue on Hover */
+            text-decoration: underline;
+        }
+
+        .navbar .logo {
+            font-size: 1.8em;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Menu -->
+<div class="navbar">
+    <div class="logo">DataStackWise</div>
+    <div class="menu-links">
+        <a href="{% url 'database_recommendation_form' %}">Input Form</a>
+        <a href="{% url 'database_table' %}">Database Table</a>
+        <a href="{% url 'recommendation_results' %}">Recommendations</a>
+    </div>
+</div>
+<div class="container">
+    <h1 class="form-title">Input Form For Application</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Application Details Section -->
+        <div class="form-section">
+            <h2>Application Details</h2>
+            <div class="form-group">
+                <label for="application_type">Application Type:</label>
+                <select id="application_type" name="application_type" required>
+                    <option value="analytics">Analytics</option>
+                    <option value="transactional">Transactional</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="scale">Scale:</label>
+                <select id="scale" name="scale" required>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="enterprise">Enterprise</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="application_complexity">Application Complexity:</label>
+                <select id="application_complexity" name="application_complexity" required>
+                    <option value="simple">Simple</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="complex">Complex</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="data_growth">Expected Data Growth (per year):</label>
+                <input type="text" id="data_growth" name="data_growth" placeholder="e.g., 50GB/year" required>
+            </div>
+        </div>
+
+        <!-- Data Requirements Section -->
+        <div class="form-section">
+            <h2>Data Requirements</h2>
+            <div class="form-group">
+                <label for="read_write_operations">Read/Write Operations:</label>
+                <select id="read_write_operations" name="read_write_operations" required>
+                    <option value="heavy_reads">Heavy Reads</option>
+                    <option value="heavy_writes">Heavy Writes</option>
+                    <option value="balanced">Balanced</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="data_load">Data Load (in GB, TB, etc.):</label>
+                <input type="text" id="data_load" name="data_load" placeholder="e.g., 100GB, 1TB" required>
+            </div>
+            <div class="form-group">
+                <label for="data_latency">Latency Requirements:</label>
+                <select id="data_latency" name="data_latency" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="data_types">Types of Data:</label>
+                <select id="data_types" name="data_types" required>
+                    <option value="structured">Structured</option>
+                    <option value="semi_structured">Semi-structured</option>
+                    <option value="unstructured">Unstructured</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Security Needs Section -->
+        <div class="form-section">
+            <h2>Security Needs</h2>
+            <div class="form-group">
+                <label for="encryption">Encryption Required:</label>
+                <select id="encryption" name="encryption" required>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="compliance">Compliance Needs (e.g., GDPR, HIPAA):</label>
+                <input type="text" id="compliance" name="compliance" placeholder="e.g., GDPR, HIPAA" required>
+            </div>
+            <div class="form-group">
+                <label for="auth_method">Authentication Method:</label>
+                <select id="auth_method" name="auth_method" required>
+                    <option value="password">Password</option>
+                    <option value="multi_factor">Multi-factor</option>
+                    <option value="oauth">OAuth</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Risk Controls Section -->
+        <div class="form-section">
+            <h2>Risk Controls</h2>
+            <div class="form-group">
+                <label for="audit_logging">Audit Logging:</label>
+                <select id="audit_logging" name="audit_logging" required>
+                    <option value="mandatory">Mandatory</option>
+                    <option value="optional">Optional</option>
+                    <option value="not_required">Not Required</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="backup_policy">Backup and Recovery Policy:</label>
+                <input type="text" id="backup_policy" name="backup_policy" placeholder="e.g., Daily backups" required>
+            </div>
+            <div class="form-group">
+                <label for="failover_strategy">Failover Strategy:</label>
+                <select id="failover_strategy" name="failover_strategy" required>
+                    <option value="automatic">Automatic</option>
+                    <option value="manual">Manual</option>
+                    <option value="none">None</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>

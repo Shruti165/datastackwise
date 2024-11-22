@@ -1,0 +1,63 @@
+Datastackwise - Database Recommendation System
+Datastackwise is a Django-based web application designed to help developers and organizations choose the best database for their projects. The application considers parameters like the project's scale, budget, query complexity, geographic distribution, and compliance needs to suggest the most suitable databases.
+
+Features
+Recommendations for various databases such as Amazon Redshift, Snowflake, Athena, Glue, and more.
+Options to assess databases for projects ranging from small proof-of-concept setups to large enterprise-level deployments.
+Beautiful UI built using the Barclays color scheme and styled with Bootstrap.
+Prerequisites
+Before you begin, ensure you have the following installed on your system:
+
+Python 3.8+
+Django 4.0+
+PostgreSQL (if using a PostgreSQL database)
+SQLite (default database for development)
+Installation Steps
+1. Clone the Repository
+
+git clone https://github.com/your-username/datastackwise.git
+cd datastackwise
+
+2. Set Up a Virtual Environment
+Create and activate a virtual environment:
+
+# On Windows
+python -m venv env
+env\Scripts\activate
+
+# On macOS/Linux
+python3 -m venv env
+source env/bin/activate
+
+3. Install Dependencies
+Install the required packages using pip:
+
+pip install -r requirements.txt
+
+4. Configure Environment Variables
+Create a .env file in the root directory and add the following variables:
+
+# .env
+DJANGO_SECRET_KEY=your_secret_key
+DEBUG=True
+DATABASE_URL=sqlite:///db.sqlite3  # For SQLite
+# DATABASE_URL=postgres://user:password@localhost:5432/dbname  # For PostgreSQL
+
+DJANGO_SECRET_KEY: Replace your_secret_key with a secure key.
+DATABASE_URL: Adjust the URL if using PostgreSQL.
+5. Set Up the Database
+Run the following commands to create the necessary database tables:
+
+bash
+Copy code
+
+python manage.py makemigrations
+python manage.py migrate
+
+6. Populate the Database
+Run the populate_data.py script to seed the database with initial data:
+
+python populate_data.py
+
+7. Run the Development Server
+Start the server to see the project in action:

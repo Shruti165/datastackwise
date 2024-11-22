@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Table - DataStackWise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        h2 {
+            color: #003B73;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #003B73;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Database Information Table</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Application Type</th>
+            <th>Scale</th>
+            <th>Read-Write Operations</th>
+            <th>Traffic</th>
+            <th>Compliance Needs</th>
+            <th>Cost</th>
+            <th>Advantages</th>
+            <th>Disadvantages</th>
+            <th>Best Use Cases</th>
+            <th>Data Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for database in databases %}
+        <tr>
+            <td>{{ database.name }}</td>
+            <td>{{ database.description }}</td>
+            <td>{{ database.application_type }}</td>
+            <td>{{ database.scale }}</td>
+            <td>{{ database.read_write_operations }}</td>
+            <td>{{ database.traffic }}</td>
+            <td>{{ database.compliance_needs }}</td>
+            <td>{{ database.cost }}</td>
+            <td>{{ database.advantages }}</td>
+            <td>{{ database.disadvantages }}</td>
+            <td>{{ database.best_use_cases }}</td>
+            <td>{{ database.data_operations }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
